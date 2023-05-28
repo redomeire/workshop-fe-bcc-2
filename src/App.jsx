@@ -7,6 +7,7 @@ import Shop from './pages/Shop'
 import Detail from './pages/Detail'
 import CartCTXFunc from './context/CartContext'
 import Cart from './pages/Cart'
+import Login from './pages/auth/Login'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       } />
       <Route path='/cart' element={<Cart />} />
       <Route path='*' element={<h2>page not found</h2>} />
+      <Route path='/login' element={<Login />}/>
     </Routes>
   )
 }
