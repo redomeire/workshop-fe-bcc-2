@@ -1,11 +1,30 @@
 import { useState } from "react";
 import Button from "../../../components/button";
+import { GrFilter } from "react-icons/gr";
 import Input from "../../../components/input";
-import { GrSearch, GrFilter } from "react-icons/gr";
 import { HiOutlineShoppingCart } from "react-icons/hi";
+import axios from "axios";
 
-const ShoppingForm = () => {
+const ShoppingForm = ({ setProducts }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [formDatas, setFormDatas] = useState({
+        sort: '',
+        limit: 1
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        axios.get("https://fakestoreapi.com/products", {
+            params: formDatas
+        })
+            .then((result) => {
+                console.log(result)
+                setProducts(result.data)
+            }).catch((err) => {
+                console.error(err)
+            });
+    }
 
     return (
         <>
@@ -15,10 +34,7 @@ const ShoppingForm = () => {
                     <GrFilter size={15} />
                 </Button>
             </div>
-            <form>
-                <Input endIcon={
-                    <GrSearch size={20} />
-                } placeholder="Find in FE shop..." />
+            <form onSubmit={handleSubmit}>
                 <Button className="w-full bg-raisin-black text-white mt-2" endIcon={
                     <HiOutlineShoppingCart size={20} />
                 }>Search Store</Button>
@@ -26,24 +42,29 @@ const ShoppingForm = () => {
                     <div className="flex justify-between sm:flex-row flex-col">
                         <div className="sm:w-[47%]">
                             <p className="text-left mb-2 font-medium">Sort</p>
-                            <select defaultValue="asc" id="sort" className="cursor-pointer border-[1.5px] border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-gray-400 w-full p-2.5 transition duration-200">
+                            <select onChange={(e) => {
+                                setFormDatas(prev => {
+                                    return {
+                                        ...prev, sort: e.target.value
+                                    }
+                                })
+                            }} defaultValue="asc" id="sort" className="cursor-pointer border-[1.5px] border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-gray-400 w-full p-2.5 transition duration-200">
                                 <option value="asc">Ascending</option>
                                 <option value="desc">Descending</option>
                             </select>
                         </div>
                         <div className="sm:w-[47%] sm:mt-0 mt-3">
-                            <p className="text-left mb-2 font-medium">Categories</p>
-                            <select defaultValue="electronics" id="categories" className="cursor-pointer border-[1.5px] border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-gray-400 w-full p-2.5 transition duration-200">
-                                <option value="electronics">electronics</option>
-                                <option value="jewelery">jewelery</option>
-                                <option value="men's clothing">men's clothing</option>
-                                <option value="women's clothing">women's clothing</option>
-                            </select>
+                            <p className="text-left mb-2 font-medium">Limit</p>
+                            <Input
+                                onChange={(e) => {
+                                    setFormDatas(prev => {
+                                        return {
+                                            ...prev, limit: e.target.value
+                                        }
+                                    })
+                                }}
+                                placeholder="enter limit" type="number" min="1" />
                         </div>
-                    </div>
-                    <div className="md:w-full mt-3">
-                        <p className="text-left mb-2 font-medium">Limit</p>
-                        <Input type="number" defaultValue={1} />
                     </div>
                 </div>
             </form>
