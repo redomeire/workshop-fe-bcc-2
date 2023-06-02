@@ -50,7 +50,7 @@ const Cart = () => {
                     <div className="md:w-2/5 sticky top-24 p-3 rounded-xl bg-white hover:shadow-lg transition duration-200">
                         <div className="flex justify-between mb-3">
                             <p className="font-medium text-sm">Subtotal</p>
-                            <p className="font-semibold">${subtotal}</p>
+                            <p className="font-semibold">${subtotal.toFixed(2)}</p>
                         </div>
                         <div className="flex justify-between border-b border-b-slate-200 pb-5">
                             <p className="font-medium text-sm">Diskon</p>
