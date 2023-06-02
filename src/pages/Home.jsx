@@ -1,8 +1,6 @@
 import AppLayout from "../components/partials/layout/AppLayout";
 import Button from "../components/button";
 
-export const NumberContext = createContext();
-
 const Home = () => {
     return (
         <AppLayout>
