@@ -1,30 +1,32 @@
-import { useState } from "react";
+// hooks
+import { useEffect, useState } from "react";
+import useFetch from "../../../hooks/useFetch";
+
+// components
 import Button from "../../../components/button";
-import { GrFilter } from "react-icons/gr";
 import Input from "../../../components/input";
+
+// icons
+import { GrFilter } from "react-icons/gr";
 import { HiOutlineShoppingCart } from "react-icons/hi";
-import axios from "axios";
 
 const ShoppingForm = ({ setProducts }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [formDatas, setFormDatas] = useState({
         sort: '',
-        limit: 1
+        limit: 20
     });
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const { datas, submitForm } = useFetch({
+        method: 'get',
+        url: `/products`,
+        onSubmit: true,
+        params: formDatas
+    })
 
-        axios.get("https://fakestoreapi.com/products", {
-            params: formDatas
-        })
-            .then((result) => {
-                console.log(result)
-                setProducts(result.data)
-            }).catch((err) => {
-                console.error(err)
-            });
-    }
+    useEffect(() => {
+        setProducts(datas)
+    }, [datas])
 
     return (
         <>
@@ -34,7 +36,7 @@ const ShoppingForm = ({ setProducts }) => {
                     <GrFilter size={15} />
                 </Button>
             </div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={submitForm}>
                 <Button className="w-full bg-raisin-black text-white mt-2" endIcon={
                     <HiOutlineShoppingCart size={20} />
                 }>Search Store</Button>

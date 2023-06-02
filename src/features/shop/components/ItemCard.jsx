@@ -13,7 +13,7 @@ const ItemCard = ({ name, price, id, image }) => {
                         <p className="font-semibold mb-1 text-xl text-left">{name}</p>
                         <p className="text-left">In stock</p>
                     </div>
-                    <p className="text-lg font-semibold text-brown">{price}</p>
+                    <p className="text-lg font-semibold text-brown">${price}</p>
                 </div>
                 <a href={`/detail/${id}`}>
                     <Button className="mt-5 bg-raisin-black text-white">View details</Button>

@@ -1,14 +1,27 @@
+import { useContext } from "react";
 import { IoMdClose } from "react-icons/io"
+import { CartContext } from "../../../context/CartContext";
 
-const CartItem = () => {
+const CartItem = ({ data }) => {
+    const { dispatch } = useContext(CartContext)
+
+    const handleClick = () => {
+        dispatch({
+            type: 'remove_from_cart',
+            id: data?.id
+        })
+    }
+
     return (
         <li className="flex items-center justify-between p-2 rounded-xl shadow my-3 bg-white border border-gray-200 relative">
-            <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" className="w-[40px]" alt="saxophone" />
+            <img src={data.image} className="w-[40px]" alt="saxophone" />
             <div className="text-right md:mr-7">
-                <p className="font-semibold text-sm">Tas hitam kulit bajul</p>
-                <p>Men's wear</p>
+                <a href={`/detail/${data.id}`}>
+                    <p className="font-semibold text-sm hover:underline cursor-pointer">{data.title}</p>
+                </a>
+                <p>{data.category}</p>
             </div>
-            <IoMdClose className="cursor-pointer absolute top-2 right-2" />
+            <IoMdClose onClick={handleClick} className="cursor-pointer absolute top-2 right-2" />
         </li>
     );
 }

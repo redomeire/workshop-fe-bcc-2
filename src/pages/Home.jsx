@@ -1,4 +1,3 @@
-import { createContext } from "react";
 import AppLayout from "../components/partials/layout/AppLayout";
 import Button from "../components/button";
 
@@ -10,7 +9,9 @@ const Home = () => {
             <div className="md:w-1/2 w-full px-10 mx-auto mt-28 text-center md:px-0">
                 <h1 className="text-6xl leading-[80px] font-semibold">A brand new way to shopping</h1>
                 <div className="flex items-center w-fit mx-auto mt-10 space-x-2">
-                    <Button className="bg-raisin-black text-white">Go shopping</Button>
+                    <a href="/shop">
+                        <Button className="bg-raisin-black text-white">Go shopping</Button>
+                    </a>
                 </div>
             </div>
         </AppLayout>
