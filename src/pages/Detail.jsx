@@ -89,7 +89,7 @@ const Detail = () => {
                                 :
                                 <p className="text-left text-sm">{datas[0]?.description}</p>
                         }
-                        <div className="flex items-center flex-wrap">
+                        <div className="flex items-center flex-wrap mt-5">
                             <CartModifier
                                 id={id}
                                 data={datas[0]}

@@ -15,6 +15,7 @@ const CartProvider = ({ children }) => {
     * to be able to consume in cart page
     */
    useEffect(() => {
+            console.log(cartDatas);
             localStorage.setItem("cart", JSON.stringify(cartDatas))
    }, [cartDatas])
 

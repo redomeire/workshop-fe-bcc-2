@@ -1,8 +1,9 @@
 import { useContext, useMemo } from "react";
-import AppLayout from "../components/partials/layout/AppLayout";
-import CartItem from "../features/cart/components/CartItem";
 import { CartContext } from "../context/CartContext";
+
+import AppLayout from "../components/partials/layout/AppLayout";
 import Button from "../components/button";
+import CartItem from "../features/cart/components/CartItem";
 import { Link } from "react-router-dom";
 
 const Cart = () => {
@@ -12,7 +13,7 @@ const Cart = () => {
         let total = 0
 
         cartDatas.map((data) => {
-            total += data.price
+            total += data.price * data.count
         })
 
         return total
@@ -20,10 +21,18 @@ const Cart = () => {
 
     return (
         <AppLayout>
-            <div className="md:w-1/2 w-full px-10 mx-auto mt-10 text-center md:px-0">
+            <div className="md:w-4/5 w-full px-10 mx-auto mt-10 text-center md:px-0">
                 <p className="mb-5 font-semibold text-3xl">Your Cart</p>
                 <div className="flex items-start justify-center md:space-x-2 md:flex-row flex-col">
-                    <div className="p-3 rounded-xl bg-white md:w-3/5">
+                    <div className="p-3 rounded-xl bg-white md:w-4/5 w-full">
+                        {
+                            cartDatas?.length > 0 &&
+                            <div className="flex text-left font-semibold text-gray-400">
+                                <p className="uppercase w-[50%]">product</p>
+                                <p className="uppercase w-[30%]">quantity</p>
+                                <p className="uppercase w-[20%]">price</p>
+                            </div>
+                        }
                         <ul>
                             {
                                 cartDatas?.length > 0 ?
@@ -37,7 +46,7 @@ const Cart = () => {
                                     })
                                     :
                                     <div>
-                                        <p className="text-xl">
+                                        <p className="text-xl mt-5">
                                             hmm! no carts here
                                         </p>
                                         <Link to="/shop">
@@ -47,7 +56,7 @@ const Cart = () => {
                             }
                         </ul>
                     </div>
-                    <div className="md:w-2/5 sticky top-24 p-3 rounded-xl bg-white hover:shadow-lg transition duration-200">
+                    <div className="md:w-1/5 w-full md:mt-0 mt-5 md:sticky top-24 p-3 rounded-xl bg-white hover:shadow-lg transition duration-200">
                         <div className="flex justify-between mb-3">
                             <p className="font-medium text-sm">Subtotal</p>
                             <p className="font-semibold">${subtotal.toFixed(2)}</p>

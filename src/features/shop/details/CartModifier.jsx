@@ -9,10 +9,10 @@ import Button from "../../../components/button";
 const CartModifier = ({ data, id }) => {
     const { cartDatas, dispatch } = useContext(CartContext)
 
-    // caching cartDataCount value
-    const cartDataCount = useMemo(() => {
-        const filteredCart = cartDatas.filter((cart) => cart.id === parseInt(id))
-        return filteredCart.length
+    // find cart item that match the id
+    const itemDetail = useMemo(() => {
+        const filteredCart = cartDatas.find((cart) => cart.id === parseInt(id))
+        return filteredCart
     }, [cartDatas])
 
     const addToCart = () => {
@@ -32,17 +32,17 @@ const CartModifier = ({ data, id }) => {
     return (
         <>
             {
-                cartDataCount === 0 ?
-                    <Button onClick={addToCart} className="bg-raisin-black text-white mt-5 mr-2" endIcon={
+                !itemDetail ?
+                    <Button onClick={addToCart} className="bg-raisin-black text-white mr-2" endIcon={
                         <HiOutlineShoppingCart size={20} />}>
                         Add to cart
                     </Button>
                     :
-                    <div className="flex items-center mt-5">
+                    <div className="flex items-center">
                         <Button onClick={addToCart} className="bg-raisin-black text-white">
                             <AiOutlinePlus size={20} />
                         </Button>
-                        <p className="mx-5 font-semibold">{cartDataCount}</p>
+                        <p className="mx-5 font-semibold">{itemDetail?.count}</p>
                         <Button onClick={removeFromCart} className="bg-raisin-black text-white">
                             <AiOutlineMinus size={20} />
                         </Button>
